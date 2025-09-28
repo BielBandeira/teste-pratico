@@ -287,10 +287,4 @@ def draw():
             player.draw()
 
         screen.draw.text(f"Vida: {vida}", (650, 10), fontname='pixel', fontsize=15, color="gray")
-
-    if ganhou:
-     screen.draw.text("Vitoria", center=(WIDTH // 2, HEIGHT // 2), fontname='pixel', fontsize=80, color="white")
-    elif perdeu:
-     screen.draw.text("Derrota", center=(WIDTH // 2, HEIGHT // 2), fontname='pixel', fontsize=80, color="white")
-
 pgzrun.go()
