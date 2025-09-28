@@ -12,12 +12,13 @@ entrar = Rect((200, 50), (400, 100))
 volume = Rect((200, 250), (400, 100))
 sair = Rect((200, 450), (400, 100))
 volume_on = True
-vida = 3
-chave = False
 ganhou = False
 perdeu = False
 pode_ser_atingido = True
 tempo_apos_dano = 0
+vida = 3
+chave = False
+
 
 # Chão e plataformas
 platforms = []
@@ -69,12 +70,11 @@ block_overhang_right = Actor("terrain_stone_horizontal_overhang_right", (310, 10
 rect_overhang = Rect(block_overhang_right.x - TILE_SIZE // 2, block_overhang_right.y - TILE_SIZE // 2, TILE_SIZE, int(TILE_SIZE * 0.1))
 platforms.append((block_overhang_right, rect_overhang))
 
-# Porta e chave
-door = Actor("door", (32, 36))
-door_rect = Rect(door.x - TILE_SIZE // 2, door.y - TILE_SIZE // 2, TILE_SIZE, TILE_SIZE)
-
+# Chave e nave
 key = Actor("key", (768, 504))
 key_rect = Rect(key.x - TILE_SIZE // 2, key.y - TILE_SIZE // 2, TILE_SIZE, TILE_SIZE)
+nave = Actor("nave", (32, 36))
+nave_rect = Rect(nave.x - TILE_SIZE // 2, nave.y - TILE_SIZE // 2, TILE_SIZE, TILE_SIZE)
 
 # classes
 class Inimigo:
@@ -248,7 +248,7 @@ def update():
     if player_rect.colliderect(key_rect):
         chave = True
 
-    if chave and player_rect.colliderect(door_rect) and not ganhou:
+    if chave and player_rect.colliderect(nave_rect) and not ganhou:
         ganhou = True
         perdeu = False
         clock.schedule_unique(reiniciar_jogo, 3)
@@ -262,19 +262,19 @@ def draw():
     if tela_atual == 'menu':
         bg.draw()
         screen.draw.filled_rect(entrar, "gray")
-        screen.draw.text("JOGAR", center=entrar.center, fontname='pixel', fontsize=30, color="white")
+        screen.draw.text("JOGAR", center=entrar.center, fontname='airstrike', fontsize=60, color="white")
 
         screen.draw.filled_rect(volume, "gray" if volume_on else "darkred")
-        screen.draw.text("SOM", center=volume.center, fontname='pixel', fontsize=30, color="white")
+        screen.draw.text("SOM", center=volume.center, fontname='airstrike', fontsize=60, color="white")
 
         screen.draw.filled_rect(sair, "gray")
-        screen.draw.text("SAIR", center=sair.center, fontname='pixel', fontsize=30, color="white")
+        screen.draw.text("SAIR", center=sair.center, fontname='airstrike', fontsize=60, color="white")
 
     elif tela_atual == 'jogo':
         bg.draw()
         for bloco, rect in platforms:
             bloco.draw()
-        door.draw()
+        nave.draw()
         if not chave:
             key.draw()
         largata1.draw()
@@ -285,6 +285,5 @@ def draw():
              player.draw()
         else:
             player.draw()
-
-        screen.draw.text(f"Vida: {vida}", (650, 10), fontname='pixel', fontsize=15, color="gray")
+        screen.draw.text(f"Vida: {vida}", (650, 10), fontname='airstrike', fontsize=30, color="gray")
 pgzrun.go()
